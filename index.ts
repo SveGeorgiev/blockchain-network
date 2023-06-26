@@ -1,4 +1,5 @@
-import { Blockchain } from "./blockchain";
+import "reflect-metadata"
+import { Blockchain } from "./src/blockchain";
 
 const blockchain = new Blockchain();
 
