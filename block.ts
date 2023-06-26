@@ -5,12 +5,14 @@ export class Block {
   private data: any;
   private previousHash: string | null;
   private hash: string;
+  private nonce: number;
 
-  constructor(previousHash: string | null, data: any) {
+  constructor(previousHash: string | null, data: any, nonce: number) {
     this.timestamp = Date.now();
     this.data = data;
     this.previousHash = previousHash;
     this.hash = this.calculateHash();
+    this.nonce = nonce;
   }
 
   public calculateHash(): string {
@@ -20,11 +22,11 @@ export class Block {
     return hash.digest('hex');
   }
 
-  getPreviousHash(): string | null {
+  public getPreviousHash(): string | null {
     return this.previousHash;
   }
 
-  getHash(): string {
+  public getHash(): string {
     return this.hash;
   }
 }
