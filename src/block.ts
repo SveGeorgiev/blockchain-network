@@ -1,4 +1,7 @@
-import crypto from 'crypto';
+import * as crypto from "crypto";
+import { Block as BlockEntity } from './entities/Block';
+import { Transaction as TransactionEntity } from './entities/Transaction';
+import { dataSource } from './data-source';
 
 export class Block {
   private timestamp: number;
@@ -28,5 +31,17 @@ export class Block {
 
   public getHash(): string {
     return this.hash;
+  }
+
+  async saveToDatabase(): Promise<void> {
+    const blockEntity = new BlockEntity();
+    blockEntity.timestamp = this.timestamp;
+    blockEntity.previousHash = this.previousHash;
+    await dataSource.manager.save(blockEntity);
+
+    const transactionEntity = new TransactionEntity();
+    transactionEntity.data = JSON.stringify(this.data);
+    transactionEntity.block = blockEntity;
+    await dataSource.manager.save(transactionEntity);
   }
 }

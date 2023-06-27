@@ -1,13 +1,12 @@
 import "reflect-metadata"
+import { dataSource } from './src/data-source';
 import { Blockchain } from "./src/blockchain";
 
-const blockchain = new Blockchain();
-
-const buildBlocks = (count: number) => {
+const buildBlocks = async (blockchain: Blockchain, count: number): Promise<void> => {
     const numbers = Array.from(Array(count).keys());
 
     for (const num of numbers) {
-        blockchain.addBlock({
+        await blockchain.addBlock({
             transaction: `Transaction ${num}`,
             from: 'Svetkata',
             to: 'LimeAcademy',
@@ -16,6 +15,16 @@ const buildBlocks = (count: number) => {
     }
 }
 
-buildBlocks(7);
+const environmentSetup = async () => {
+    await dataSource.initialize();
 
-console.log("Blockchain:", blockchain.chain);
+    if (dataSource.isInitialized) {
+        const blockchain = new Blockchain();
+
+        await buildBlocks(blockchain, 5);
+
+        console.log("Blockchain:", blockchain.chain);
+    };
+};
+
+environmentSetup();
