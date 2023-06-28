@@ -19,7 +19,7 @@ export class Block {
   }
 
   public calculateHash(): string {
-    const dataString = `${this.previousHash}${this.timestamp}${JSON.stringify(this.data)}`;
+    const dataString = `${this.previousHash}${JSON.stringify(this.data)}${this.timestamp}`;
     const hash = crypto.createHash('sha256');
     hash.update(dataString);
     return hash.digest('hex');

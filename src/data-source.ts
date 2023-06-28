@@ -4,7 +4,6 @@ import { DataSource } from "typeorm"
 import { Block } from "./entities/Block"
 import { Transaction } from './entities/Transaction';
 
-
 dotenv.config();
 
 export const dataSource = new DataSource({

@@ -12,6 +12,6 @@ export class Block {
     @Column({ nullable: true })
     previousHash: string | null;
 
-    @OneToMany(() => Transaction, transaction => transaction.block)
+    @OneToMany(() => Transaction, transaction => transaction.block, { eager: true })
     transactions: Transaction[];
 }

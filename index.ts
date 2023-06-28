@@ -1,20 +1,26 @@
 import "reflect-metadata"
+import { plainToClass } from "class-transformer";
+
 import { dataSource } from './src/data-source';
 import { Blockchain } from "./src/blockchain";
-import { Block } from './src/entities/Block';
-import { Transaction } from './src/entities/Transaction';
+import { Block } from './src/block';
+import { Block as BlockEntity } from './src/entities/Block';
 
-const buildBlocks = async (blockchain: Blockchain, count: number): Promise<void> => {
-    const numbers = Array.from(Array(count).keys());
 
-    for (const num of numbers) {
+const initializeBlockchain = async () => {
+    const blockEntities = await dataSource.manager.find(BlockEntity);
+    const blocks = blockEntities.map(entity => plainToClass(Block, entity));
+    return new Blockchain(blocks);
+};
+
+const addBlocks = async (blockchain: Blockchain, count: number): Promise<void> => {
+    [...Array(count)].fill(0).forEach(async () => {
         await blockchain.addBlock({
-            transaction: `Transaction ${num}`,
             from: 'Svetkata',
             to: 'LimeAcademy',
             message: 'I want to be part of LimeAcademy'
         });
-    }
+    })
 }
 
 const environmentSetup = async () => {
@@ -25,14 +31,9 @@ const environmentSetup = async () => {
     }
 
     if (dataSource.isInitialized) {
-        const blockchain = new Blockchain();
+        const blockchain = await initializeBlockchain();
 
-        await buildBlocks(blockchain, 5);
-
-        // const blocks = await dataSource.manager.find(Block);
-        // console.log("blocks:", blocks);
-        // const transactions = await dataSource.manager.find(Transaction);
-        // console.log("transactions:", transactions);
+        // await addBlocks(blockchain, 2);
 
         console.log("blockchain:", blockchain.chain);
     };

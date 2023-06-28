@@ -17,7 +17,7 @@ app.get('/blocks/all', async (req: Request, res: Response) => {
 
 // app.get('/block/hash/:hash', async (req: Request, res: Response) => {
 //     try {
-//         const block = await dataSource.manager.findOne(Block, { hash: req.params.hash });
+//         const block = await dataSource.manager.findOneBy(Block, { hash: req.params.hash });
 //         res.json(block);
 
 //         if (!block) {
