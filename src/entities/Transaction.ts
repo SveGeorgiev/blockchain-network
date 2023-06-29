@@ -6,8 +6,14 @@ export class Transaction {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    data: string;
+    @Column({ nullable: true })
+    from: string;
+
+    @Column({ nullable: true })
+    to: string;
+
+    @Column({ nullable: true })
+    message: string;
 
     @ManyToOne(() => Block, block => block.transactions)
     block: Block;

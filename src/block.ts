@@ -48,7 +48,9 @@ export class Block {
     await dataSource.manager.save(blockEntity);
 
     const transactionEntity = new TransactionEntity();
-    transactionEntity.data = JSON.stringify(this.data);
+    transactionEntity.from = this.data.from;
+    transactionEntity.to = this.data.to;
+    transactionEntity.message = this.data.message;
     transactionEntity.block = blockEntity;
     await dataSource.manager.save(transactionEntity);
   }
