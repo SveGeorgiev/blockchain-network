@@ -9,8 +9,14 @@ export class Block {
     @Column({ type: 'bigint' })
     timestamp: number;
 
+    @Column()
+    hash: string;
+
     @Column({ nullable: true })
     previousHash: string | null;
+
+    @Column()
+    nonce: number;
 
     @OneToMany(() => Transaction, transaction => transaction.block, { eager: true })
     transactions: Transaction[];

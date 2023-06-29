@@ -11,7 +11,7 @@ export class Blockchain {
   }
 
   private async createGenesisBlock(): Promise<void> {
-    const genesisBlock = new Block(null, 'Genesis Block', this.chain.length);
+    const genesisBlock = new Block(null, { message: 'Genesis Block' }, this.chain.length);
     this.chain.push(genesisBlock);
     await genesisBlock.saveToDatabase();
   }

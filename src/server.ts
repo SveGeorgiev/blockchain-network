@@ -15,21 +15,15 @@ app.get('/blocks/all', async (req: Request, res: Response) => {
     }
 });
 
-// app.get('/block/hash/:hash', async (req: Request, res: Response) => {
-//     try {
-//         const block = await dataSource.manager.findOneBy(Block, { hash: req.params.hash });
-//         res.json(block);
-
-//         if (!block) {
-//             res.status(404).json({ error: 'Block not found' });
-//         } else {
-//             res.json(block);
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// });
+app.get('/block/hash/:hash', async (req: Request, res: Response) => {
+    try {
+        const block = await dataSource.manager.findOneBy(Block, { hash: req.params.hash });
+        block ? res.json(block) : res.status(404).json({ error: 'Block not found' })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 const startServer = async () => {
     try {

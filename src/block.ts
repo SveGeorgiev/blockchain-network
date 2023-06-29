@@ -10,11 +10,17 @@ export class Block {
   private hash: string;
   private nonce: number;
 
-  constructor(previousHash: string | null, data: any, nonce: number) {
-    this.timestamp = Date.now();
+  constructor(
+    previousHash: string | null,
+    data: any,
+    nonce: number,
+    hash?: string,
+    timestamp?: number
+  ) {
+    this.timestamp = timestamp || Date.now();
     this.data = data;
     this.previousHash = previousHash;
-    this.hash = this.calculateHash();
+    this.hash = hash || this.calculateHash();
     this.nonce = nonce;
   }
 
@@ -36,7 +42,9 @@ export class Block {
   async saveToDatabase(): Promise<void> {
     const blockEntity = new BlockEntity();
     blockEntity.timestamp = this.timestamp;
+    blockEntity.hash = this.hash;
     blockEntity.previousHash = this.previousHash;
+    blockEntity.nonce = this.nonce;
     await dataSource.manager.save(blockEntity);
 
     const transactionEntity = new TransactionEntity();

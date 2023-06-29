@@ -9,7 +9,11 @@ import { Block as BlockEntity } from './src/entities/Block';
 
 const initializeBlockchain = async () => {
     const blockEntities = await dataSource.manager.find(BlockEntity);
-    const blocks = blockEntities.map(entity => plainToClass(Block, entity));
+    const blocks = blockEntities.map(entity => {
+        const block: any = plainToClass(Block, entity);
+        const data = JSON.parse(block.transactions.map(t => t.data).join(','));
+        return new Block(block.previousHash, data, block.nonce, block.hash, block.timestamp);
+    });
     return new Blockchain(blocks);
 };
 
@@ -33,7 +37,7 @@ const environmentSetup = async () => {
     if (dataSource.isInitialized) {
         const blockchain = await initializeBlockchain();
 
-        // await addBlocks(blockchain, 2);
+        await addBlocks(blockchain, 3);
 
         console.log("blockchain:", blockchain.chain);
     };
