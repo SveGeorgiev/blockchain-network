@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash';
 
 import { Block } from "./block";
+import { Transaction } from './transaction';
 
 export class Blockchain {
   public chain: Block[];
@@ -11,12 +12,13 @@ export class Blockchain {
   }
 
   private async createGenesisBlock(): Promise<void> {
-    const genesisBlock = new Block(null, { message: 'Genesis Block' }, this.chain.length);
+    const transaction: Transaction = new Transaction(null, null, 'Genesis Block');
+    const genesisBlock = new Block(null, null);
     this.chain.push(genesisBlock);
     await genesisBlock.saveToDatabase();
   }
 
-  public async addBlock(data: any): Promise<void> {
+  public async addBlock(data: Transaction): Promise<void> {
     const previousBlock = this.getPreviousBlock();
     const block = new Block(previousBlock?.getHash(), data, this.chain.length);
     const isValidBlock = this.validateBlock(previousBlock, block);

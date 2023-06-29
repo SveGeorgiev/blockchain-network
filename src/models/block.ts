@@ -1,27 +1,29 @@
 import * as crypto from "crypto";
-import { Block as BlockEntity } from './entities/Block';
-import { Transaction as TransactionEntity } from './entities/Transaction';
-import { dataSource } from './data-source';
+import { dataSource } from '../data-source';
+import { Block as BlockEntity } from '../entities/Block';
+import { Transaction as TransactionEntity } from '../entities/Transaction';
+import { Transaction } from "./transaction";
 
 export class Block {
-  private timestamp: number;
-  private data: any;
   private previousHash: string | null;
-  private hash: string;
+  private data: Transaction;
   private nonce: number;
+  private timestamp: number;
+  private hash: string;
+
 
   constructor(
     previousHash: string | null,
-    data: any,
-    nonce: number,
-    hash?: string,
-    timestamp?: number
+    data: Transaction,
+    nonce?: number,
+    timestamp?: number,
+    hash?: string
   ) {
-    this.timestamp = timestamp || Date.now();
-    this.data = data;
     this.previousHash = previousHash;
+    this.data = data;
+    this.nonce = nonce || 0;
+    this.timestamp = timestamp || Date.now();
     this.hash = hash || this.calculateHash();
-    this.nonce = nonce;
   }
 
   public calculateHash(): string {
@@ -48,9 +50,9 @@ export class Block {
     await dataSource.manager.save(blockEntity);
 
     const transactionEntity = new TransactionEntity();
-    transactionEntity.from = this.data.from;
-    transactionEntity.to = this.data.to;
-    transactionEntity.message = this.data.message;
+    transactionEntity.from = this.data?.from;
+    transactionEntity.to = this.data?.to;
+    transactionEntity.message = this.data?.message;
     transactionEntity.block = blockEntity;
     await dataSource.manager.save(transactionEntity);
   }

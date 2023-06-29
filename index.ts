@@ -2,28 +2,25 @@ import "reflect-metadata"
 import { plainToClass } from "class-transformer";
 
 import { dataSource } from './src/data-source';
-import { Blockchain } from "./src/blockchain";
-import { Block } from './src/block';
+import { Blockchain } from "./src/models/blockchain";
+import { Block } from './src/models/block';
 import { Block as BlockEntity } from './src/entities/Block';
-
+import { Transaction } from './src/models/transaction';
 
 const initializeBlockchain = async () => {
     const blockEntities = await dataSource.manager.find(BlockEntity);
     const blocks = blockEntities.map(entity => {
         const block: any = plainToClass(Block, entity);
         const [{ from, to, message }] = block.transactions;
-        return new Block(block.previousHash, { from, to, message }, block.nonce, block.hash, block.timestamp);
+        return new Block(block.previousHash, { from, to, message }, block.nonce, block.timestamp, block.hash);
     });
     return new Blockchain(blocks);
 };
 
 const addBlocks = async (blockchain: Blockchain, count: number): Promise<void> => {
     [...Array(count)].fill(0).forEach(async () => {
-        await blockchain.addBlock({
-            from: 'Svetkata',
-            to: 'LimeAcademy',
-            message: 'I want to be part of LimeAcademy'
-        });
+        const transaction: Transaction = new Transaction('Svetkata', 'LimeAcademy', 'I want to be part of LimeAcademy');
+        await blockchain.addBlock(transaction);
     })
 }
 
