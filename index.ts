@@ -10,9 +10,15 @@ import { Transaction } from './src/models/transaction';
 const initializeBlockchain = async () => {
     const blockEntities = await dataSource.manager.find(BlockEntity);
     const blocks = blockEntities.map(entity => {
-        const block: any = plainToClass(Block, entity);
-        const [{ from, to, message }] = block.transactions;
-        return new Block(block.previousHash, { from, to, message }, block.nonce, block.timestamp, block.hash);
+        const block: Block = plainToClass(Block, entity);
+        const [{ from, to, message }] = block['transactions'];
+        return new Block(
+            block.previousHash,
+            new Transaction(from, to, message),
+            block.nonce,
+            block.timestamp,
+            block.hash
+        );
     });
     return new Blockchain(blocks);
 };

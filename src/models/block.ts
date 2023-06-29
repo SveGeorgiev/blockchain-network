@@ -5,11 +5,11 @@ import { Transaction as TransactionEntity } from '../entities/Transaction';
 import { Transaction } from "./transaction";
 
 export class Block {
-  private previousHash: string | null;
-  private data: Transaction;
-  private nonce: number;
-  private timestamp: number;
-  private hash: string;
+  public previousHash: string | null;
+  public data: Transaction;
+  public nonce: number;
+  public timestamp: number;
+  public hash: string;
 
 
   constructor(
