@@ -11,7 +11,7 @@ const initializeBlockchain = async () => {
     const blockEntities: BlockEntity[] = await dataSource.manager.find(BlockEntity);
     const blocks = blockEntities.map((entity: BlockEntity) => {
         const block: Block = plainToClass(Block, entity);
-        const [{ from, to, message }] = block['transactions'];
+        const [{ from, to, message }] = block?.transactions || [];
         return new Block(
             block.previousHash,
             new Transaction(from, to, message),

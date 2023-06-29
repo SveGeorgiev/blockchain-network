@@ -4,20 +4,20 @@ import { Transaction } from './Transaction';
 @Entity()
 export class Block {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column({ type: 'bigint' })
-    timestamp: number;
+    timestamp!: number;
 
     @Column()
-    hash: string;
+    hash!: string;
 
-    @Column({ nullable: true })
-    previousHash: string | null;
+    @Column({ type: 'varchar', nullable: true })
+    previousHash!: string | null;
 
     @Column()
-    nonce: number;
+    nonce!: number;
 
     @OneToMany(() => Transaction, transaction => transaction.block, { eager: true })
-    transactions: Transaction[];
+    transactions!: Transaction[];
 }

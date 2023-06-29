@@ -27,7 +27,7 @@ export class Blockchain implements IBlockchain {
   }
 
   private async createGenesisBlock(): Promise<void> {
-    const transaction: Transaction = new Transaction(null, null, 'Genesis Block');
+    const transaction: Transaction = new Transaction('', '', 'Genesis Block');
     const genesisBlock = new Block(null, transaction);
     this.chain.push(genesisBlock);
     await genesisBlock.saveToDatabase();

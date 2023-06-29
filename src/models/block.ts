@@ -11,6 +11,7 @@ export class Block implements IBlock {
   public nonce: number;
   public timestamp: number;
   public hash: string;
+  public transactions?: Transaction[] = [];
 
   constructor(
     previousHash: string | null,

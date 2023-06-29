@@ -4,17 +4,17 @@ import { Block } from './Block';
 @Entity()
 export class Transaction {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column({ nullable: true })
-    from: string;
+    from!: string;
 
     @Column({ nullable: true })
-    to: string;
+    to!: string;
 
     @Column({ nullable: true })
-    message: string;
+    message!: string;
 
     @ManyToOne(() => Block, block => block.transactions)
-    block: Block;
+    block!: Block;
 }

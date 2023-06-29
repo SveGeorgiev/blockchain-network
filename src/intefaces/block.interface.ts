@@ -6,6 +6,7 @@ export interface Block {
     nonce: number;
     timestamp: number;
     hash: string;
+    transactions?: Transaction[];
 
     calculateHash(): string;
     getPreviousHash(): string | null;
