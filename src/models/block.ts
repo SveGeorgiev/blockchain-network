@@ -11,7 +11,6 @@ export class Block {
   public timestamp: number;
   public hash: string;
 
-
   constructor(
     previousHash: string | null,
     data: Transaction,

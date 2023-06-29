@@ -1,11 +1,9 @@
-import { Block } from "./block";
+import { Transaction as ITransaction } from "../intefaces/transaction.interface";
 
-export class Transaction {
-    public id?: number;
+export class Transaction implements ITransaction {
     public from: string;
     public to: string;
     public message: string;
-    public block?: Block;
 
     constructor(from: string, to: string, message: string) {
         this.from = from;

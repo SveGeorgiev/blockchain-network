@@ -13,7 +13,7 @@ export class Blockchain {
 
   private async createGenesisBlock(): Promise<void> {
     const transaction: Transaction = new Transaction(null, null, 'Genesis Block');
-    const genesisBlock = new Block(null, null);
+    const genesisBlock = new Block(null, transaction);
     this.chain.push(genesisBlock);
     await genesisBlock.saveToDatabase();
   }
