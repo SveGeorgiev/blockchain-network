@@ -12,7 +12,7 @@ export const dataSource = new DataSource({
     port: 3306,
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: 'entry_task',
+    database: 'blockchain_network',
     synchronize: true,
     logging: false,
     entities: [Block, Transaction]

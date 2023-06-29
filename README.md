@@ -1,39 +1,21 @@
 # Blockchain Network
 
-# 1. **Create your own blockchain network and generate blocks:**
+- This program demonstrates the usage of the provided classes and modules to initialize a blockchain, retrieve data from a data source, add blocks to the blockchain, and output the blockchain's chain. It serves as a starting point for building a more comprehensive blockchain application using TypeScript.
 
-## Your Task:
+- The `Block` class represents a block in a blockchain. It has properties such as previousHash, data, nonce, timestamp, and hash to store relevant information about the block. It also includes methods for calculating the hash of the block, retrieving the previous hash, and saving the block and its associated transaction to a database.
 
-- You need to create a **class** that handles the creation of a **`Block`**. The block will contain the following properties:
+- The `Blockchain` class represents a blockchain, which is a collection of blocks. It provides functionality to add blocks to the blockchain, validate the integrity of the blocks and the entire blockchain, and create the genesis block.
 
-  - `Timestamp`
-  - `Data` - **Transactions**
-  - `Hash` - It should be built by the following properties (the hash of the previous block, the current data (transactions), and the current timestamp. Why do we need to include the previous block hash in the current hash? It’s a good question: It ensures that the block will be unchanged during the time. If we change the hash of block 1, we then need to recalculate all the hashes of the next blocks, so this is a good way of keeping the immutability. It’s your choice what library you will use for hashing.
-  - **Hint**: Node.js has its own implementation of hashing functionality.
+## Setup
 
-- You need to create a **class** that will operate as a **`Blockchain`** network. The Blockchain class should contain the following functionalities:
-  - It should be able to create the first initial block (genesis block)
-  - It should be able to add a new block
-  - Validation of the chain.
-    - **Hint**: for this task, we can perform the following validation:
-      - We can check if the hash of the current block is equal to the information of the block hashed again, or we can check the hash of the previous block if it is **equal** to the previous block hash read from the current block.
-      - That’s actually one more **hint**: You need to implement getters for easy access to the current/previous hashes. So in your `Block` class, you need to have properties for them as well.
-- Save your blockchain data into a database:
+- Set Database Connection Settings: Open the `data-source.ts` file and configure the necessary settings for connecting to the database. Ensure you provide the correct host, port, username, password, and database name.
 
-  - You need to save all the blocks and transactions into a database. The database type is of your choice: Relational/Non-Relational Database.
-  - Your schema should support `transactions`
+- Create the Database: Ensure that the specified database exists. If it doesn't, create it manually or use a database management tool to create the database based on the configured settings.
 
-- You need to create a script file for testing your blockchain by adding blocks and printing them on the console.
-- Your final result may look like this, and keep in mind that every blockchain starts with a `Genesis block`.
+- Install Modules: Open your terminal or command prompt and navigate to the project directory. Run the command `npm install` to install all the required modules and dependencies for the project. This step ensures that the project has all the necessary libraries to run successfully.
 
-**Please Note:** Nonce is a random 32-bit number that is used as a base for hash calculations. For the simplicity of the task, you can set it initially to zero (0) and increment it on every new block.\_
+## Start
 
-- Generate a couple of blocks.
+- Start the Blockchain: Once the modules are installed, you can start the blockchain by running the command `ts-node index.ts` in your terminal or command prompt. This command will execute the index.ts file using the ts-node package, which allows running TypeScript files directly without explicit compilation.
 
-# 2. Create Rest API**:**
-
-- Create a rest API with the following \***\*Endpoints\*\***
-  **Endpoint: `/blocks/all`**
-  The server should handle a GET request at an endpoint named `/**blocks**/all`. It should return a list of all **`blocks`** saved in the database.
-  **Endpoint: `/block/hash`**
-  The server should handle a GET request at an endpoint named `/**block**/hash`. It should return the **`block`** based on its hash, saved in the database.
+- Start the API: Open a new terminal and enter the command `ts-node .\src\server.ts`. This command will initiate the execution of the API by running the server.ts file using ts-node.
