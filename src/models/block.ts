@@ -1,10 +1,11 @@
 import * as crypto from "crypto";
 import { dataSource } from '../data-source';
 import { Block as BlockEntity } from '../entities/Block';
+import { Block as IBlock } from '../intefaces/block.interface';
 import { Transaction as TransactionEntity } from '../entities/Transaction';
 import { Transaction } from "./transaction";
 
-export class Block {
+export class Block implements IBlock {
   public previousHash: string | null;
   public data: Transaction;
   public nonce: number;

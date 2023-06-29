@@ -2,20 +2,14 @@ import { isEmpty } from 'lodash';
 
 import { Block } from "./block";
 import { Transaction } from './transaction';
+import { Blockchain as IBlockchain } from '../intefaces/blockchain.interface';
 
-export class Blockchain {
+export class Blockchain implements IBlockchain {
   public chain: Block[];
 
   constructor(chain: Block[]) {
     this.chain = chain;
     isEmpty(this.chain) && this.createGenesisBlock();
-  }
-
-  private async createGenesisBlock(): Promise<void> {
-    const transaction: Transaction = new Transaction(null, null, 'Genesis Block');
-    const genesisBlock = new Block(null, transaction);
-    this.chain.push(genesisBlock);
-    await genesisBlock.saveToDatabase();
   }
 
   public async addBlock(data: Transaction): Promise<void> {
@@ -30,6 +24,13 @@ export class Blockchain {
     } else {
       console.log('Chain validation failed: Invalid block detected.');
     }
+  }
+
+  private async createGenesisBlock(): Promise<void> {
+    const transaction: Transaction = new Transaction(null, null, 'Genesis Block');
+    const genesisBlock = new Block(null, transaction);
+    this.chain.push(genesisBlock);
+    await genesisBlock.saveToDatabase();
   }
 
   private getPreviousBlock(): Block {

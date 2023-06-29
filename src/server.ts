@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { dataSource } from '../src/data-source';
-import { Block } from './entities/Block'
+import { Block } from './entities/Block';
 
 const app = express();
 const port = 3000;

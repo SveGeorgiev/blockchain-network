@@ -1,4 +1,4 @@
-import "reflect-metadata"
+import "reflect-metadata";
 import { plainToClass } from "class-transformer";
 
 import { dataSource } from './src/data-source';
@@ -8,8 +8,8 @@ import { Block as BlockEntity } from './src/entities/Block';
 import { Transaction } from './src/models/transaction';
 
 const initializeBlockchain = async () => {
-    const blockEntities = await dataSource.manager.find(BlockEntity);
-    const blocks = blockEntities.map(entity => {
+    const blockEntities: BlockEntity[] = await dataSource.manager.find(BlockEntity);
+    const blocks = blockEntities.map((entity: BlockEntity) => {
         const block: Block = plainToClass(Block, entity);
         const [{ from, to, message }] = block['transactions'];
         return new Block(
