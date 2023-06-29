@@ -5,6 +5,9 @@ import { Block as IBlock } from '../intefaces/block.interface';
 import { Transaction as TransactionEntity } from '../entities/Transaction';
 import { Transaction } from "./transaction";
 
+/**
+ * Represents a block in a blockchain.
+ */
 export class Block implements IBlock {
   public previousHash: string | null;
   public data: Transaction;
@@ -13,6 +16,14 @@ export class Block implements IBlock {
   public hash: string;
   public transactions?: Transaction[] = [];
 
+  /**
+   * Creates a new instance of the Block class.
+   * @param previousHash The hash of the previous block in the blockchain.
+   * @param data The data stored in the block, typically a transaction.
+   * @param nonce The nonce default value is 0.
+   * @param timestamp The timestamp when the block was created. Default is the current timestamp.
+   * @param hash The hash of the current block. Default is calculated based on the other properties.
+   */
   constructor(
     previousHash: string | null,
     data: Transaction,
@@ -27,6 +38,10 @@ export class Block implements IBlock {
     this.hash = hash || this.calculateHash();
   }
 
+  /**
+  * Calculates the hash of the block based on its properties.
+  * @returns The calculated hash value.
+  */
   public calculateHash(): string {
     const dataString = `${this.previousHash}${JSON.stringify(this.data)}${this.timestamp}`;
     const hash = crypto.createHash('sha256');
@@ -34,14 +49,26 @@ export class Block implements IBlock {
     return hash.digest('hex');
   }
 
+  /**
+ * Retrieves the hash of the previous block.
+ * @returns The hash of the previous block.
+ */
   public getPreviousHash(): string | null {
     return this.previousHash;
   }
 
+  /**
+ * Retrieves the hash of the current block.
+ * @returns The hash of the current block.
+ */
   public getHash(): string {
     return this.hash;
   }
 
+  /**
+ * Saves the block and its associated transaction to the database.
+ * @returns A promise that resolves when the saving process is complete.
+ */
   async saveToDatabase(): Promise<void> {
     const blockEntity = new BlockEntity();
     blockEntity.timestamp = this.timestamp;

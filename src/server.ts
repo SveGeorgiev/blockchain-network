@@ -5,6 +5,10 @@ import { Block } from './entities/Block';
 const app = express();
 const port = 3000;
 
+/**
+ * Retrieves all blocks from the data source.
+ * Endpoint: GET /blocks/all
+ */
 app.get('/blocks/all', async (req: Request, res: Response) => {
     try {
         const blocks = await dataSource.manager.find(Block);
@@ -15,6 +19,11 @@ app.get('/blocks/all', async (req: Request, res: Response) => {
     }
 });
 
+/**
+ * Retrieves a block by its hash from the data source.
+ * Endpoint: GET /block/hash/:hash
+ * @param hash The hash of the block to retrieve.
+ */
 app.get('/block/hash/:hash', async (req: Request, res: Response) => {
     try {
         const block = await dataSource.manager.findOneBy(Block, { hash: req.params.hash });
@@ -25,6 +34,9 @@ app.get('/block/hash/:hash', async (req: Request, res: Response) => {
     }
 });
 
+/**
+ * Starts the server and initializes the data source.
+ */
 const startServer = async () => {
     try {
         await dataSource.initialize();
